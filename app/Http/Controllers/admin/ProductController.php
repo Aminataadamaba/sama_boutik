@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\Image;
 use Illuminate\Support\Facades\Storage;
+use Maatwebsite\Excel\Facades\Excel;
 
 
 
@@ -241,23 +242,28 @@ class ProductController extends Controller
     public function destroy($id, Request $request){
         $product = Product::find($id);
         if (empty($product)) {
-            $request-session()->flash('error','product not found');
-         //   return redirect()->route('categories.index');
-         return response()->json([
-            'status' => true,
-            'message' => 'product dnot found delete'
-         ]) ;
-
+            $request-session()->flash('error','Product not found');
+            return response()->json([
+                'status' => false,
+                'message' => 'Product not found'
+            ]);
         }
-        File::delete(public_path().'/uploads/product/'.$product->image);
+
+        // Supprimer l'image associée si elle existe
+        if (!empty($product->image)) {
+            Storage::delete('public/uploads/product/large/' . $product->image);
+        }
+
+        // Supprimer le produit de la base de données
         $product->delete();
 
-        $request->session()->flash('success','product deleted successfully');
+        $request->session()->flash('success','Product deleted successfully');
         return response()->json([
             'status' => true,
-            'message' => 'product deleted successfully'
+            'message' => 'Product deleted successfully'
         ]);
-}
+    }
+
 
 public function getProducts(Request $request){
 
@@ -275,5 +281,13 @@ public function getProducts(Request $request){
         'status'=> true,
     ]);
 }
+// public function export()
+// {
+//     // Récupérer tous les produits de la base de données
+//     $products = Product::all();
+
+//     // Exporter les produits vers un fichier Excel
+//     return Excel::download(new ($products), 'products.xlsx');
+// }
 
 }

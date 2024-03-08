@@ -51,7 +51,7 @@
           </a>
         </li>
         <li class="menu-item">
-          <a href="auth-forgot-password-basic.html" class="menu-link" >
+          <a href="{{ route('orders.index') }}" class="menu-link" >
             <div data-i18n="Basic">Commandes</div>
           </a>
         </li>

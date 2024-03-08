@@ -163,27 +163,33 @@ class CartController extends Controller
     }
      // calculate shipping here checkout
 
-     if ( $customerAddress != '') {
+     if ($customerAddress != '') {
         $userCountry = $customerAddress->country_id;
 
-        $shippingInfo = ShippingCharge::where('country_id',$userCountry)->first();
+        $shippingInfo = ShippingCharge::where('country_id', $userCountry)->first();
 
-       //  echo $shippingInfo->amount;
+        if ($shippingInfo !== null) {
+            $totalQty = 0;
+            $totalShippingCharge = 0;
+            $grandTotal = 0;
 
-      $totalQty = 0;
-      $totalShippingCharge = 0;
-      $grandTotal = 0;
-      foreach (Cart::content() as $item) {
-       $totalQty += $item->qty;
-      }
+            foreach (Cart::content() as $item) {
+                $totalQty += $item->qty;
+            }
 
-      $totalShippingCharge = $totalQty * $shippingInfo->amount;
-
-      $grandTotal = ($subTotal-$discount)+$totalShippingCharge;
-     }else {
-        $grandTotal = ($subTotal-$discount);
+            $totalShippingCharge = $totalQty * $shippingInfo->amount;
+            $grandTotal = ($subTotal - $discount) + $totalShippingCharge;
+        } else {
+            // Gérer le cas où $shippingInfo est null
+            $grandTotal = ($subTotal - $discount);
+            $totalShippingCharge = 0;
+        }
+    } else {
+        // Gérer le cas où $customerAddress est vide
+        $grandTotal = ($subTotal - $discount);
         $totalShippingCharge = 0;
-     }
+    }
+
     //  $userCountry = $customerAddress->country_id;
 
     //  $shippingInfo = ShippingCharge::where('country_id',$userCountry)->first();
@@ -300,9 +306,6 @@ public function processCheckout(Request $request){
         }
 
 
-
-
-
             $order = new Order;
             $order->subtotal = $subTotal;
             $order->shipping = $shipping;
@@ -321,7 +324,7 @@ public function processCheckout(Request $request){
             $order->city = $request->city;
             $order->zip = $request->zip;
             $order->notes = $request->notes;
-            $order->discount = $request->discount;
+            $order->discount = $discount;
             $order->country_id = $request->country;
             $order->coupon_code_id = $discountCodeId;
             $order->save();
@@ -338,6 +341,8 @@ public function processCheckout(Request $request){
                 $orderItem->save();
 
             }
+            // send Order Email
+            orderEmail($order->id,'customer');
             session()->flash('success','You have successfully placed your order');
 
             Cart::destroy();

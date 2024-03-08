@@ -45,11 +45,13 @@
                                                 <td>{{ \Carbon\Carbon::parse($order->created_at)->format('d M, Y') }}</td>
                                                 <td>
                                                     @if($order->status == 'pending')
-                                                      <span class="badge bg-danger">Pending</span>
+                                                      <span class="badge bg-danger">En Attente</span>
                                                     @elseif ($order->status == 'shipped')
-                                                     <span class="badge bg-info">Shipped</span>
-                                                     @else
-                                                     <span class="badge bg-success">Delivered</span>
+                                                     <span class="badge bg-info">Expedier</span>
+                                                     @elseif($order->status == 'delivered')
+                                                    <span class="badge bg-success">Livre</span>
+                                                    @else
+                                                    <span class="badge bg-danger">Annuler</span>
                                                     @endif
 
 

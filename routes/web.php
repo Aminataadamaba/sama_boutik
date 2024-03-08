@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\admin\DiscountCodeController;
+use App\Http\Controllers\admin\OrderController;
 use App\Http\Controllers\admin\ProductSubCategoryController;
 use App\Http\Controllers\admin\ShippingController;
 use App\Http\Controllers\AuthController;
@@ -33,8 +34,8 @@ use Illuminate\Http\Request;
 // Route::get('/', function () {
 //     return view('welcome');
 // });
-// Route::get('/', function () {
-//     return view('admin/layouts/app');
+// Route::get('/test', function () {
+//     orderEmail(14);
 // });
 
 // front end
@@ -129,8 +130,9 @@ Route::group(['prefix' => 'admin'], function(){
         Route::put('/products/{product}',[ProductController::class,'update'])->name('products.update');
         Route::delete('/products/{product}',[ProductController::class,'destroy'])->name('products.delete');
         Route::get('/get-products', [ProductController::class, 'getProducts'] )->name('products.getProducts');
+        Route::get('products/export', 'ProductController@export')->name('products.export');
 
-        //Routes des shipping
+        //Routes des shipping(transport maritine)
         Route::get('/shipping/create',[ShippingController::class,'create'])->name('shipping.create');
         Route::post('/shipping',[ShippingController::class,'store'])->name('shipping.store');
         Route::get('/shipping/{id}',[ShippingController::class,'edit'])->name('shipping.edit');
@@ -145,6 +147,11 @@ Route::group(['prefix' => 'admin'], function(){
         Route::put('/coupons/{coupon}',[DiscountCodeController::class,'update'])->name('coupons.update');
         Route::delete('/coupons/{coupon}',[DiscountCodeController::class,'destroy'])->name('coupons.delete');
 
+        // Routes Des commandes
+        Route::get('/orders',[OrderController::class,'index'])->name('orders.index');
+        Route::get('/orders/{id}',[OrderController::class,'detail'])->name('orders.detail');
+        Route::post('/order/change-status/{id}',[OrderController::class,'changeOrderStatus'])->name('orders.changeOrderStatus');
+        Route::post('/order/send-email/{id}',[OrderController::class,'sendInvoiceEmail'])->name('orders.sendInvoiceEmail');
          // temp-image-create
         Route::post('/upload-temp-image',[TempImagesController::class,'create'])->name('temp-images.create');
         Route::post('/upload-product-image',[ProductImageController::class,'create'])->name('product-images.create');
