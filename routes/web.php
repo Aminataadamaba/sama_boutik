@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\admin\DiscountCodeController;
 use App\Http\Controllers\admin\ProductSubCategoryController;
 use App\Http\Controllers\admin\ShippingController;
 use App\Http\Controllers\AuthController;
@@ -128,6 +129,14 @@ Route::group(['prefix' => 'admin'], function(){
         Route::put('/shipping/{id}',[ShippingController::class,'update'])->name('shipping.update');
         Route::delete('/shipping/{id}',[ShippingController::class,'destroy'])->name('shipping.delete');
 
+        // Routes des coupon
+        // Route::get('/coupons',[DiscountCodeController::class,'index'])->name('coupons.index');
+        Route::get('/coupons/create',[DiscountCodeController::class,'create'])->name('coupons.create');
+        // Route::post('/coupons',[DiscountCodeController::class,'store'])->name('coupons.store');
+        // Route::get('/coupons/{coupon}/edit',[DiscountCodeController::class,'edit'])->name('coupons.edit');
+        // Route::put('/coupons/{coupon}',[DiscountCodeController::class,'update'])->name('coupons.update');
+        // Route::delete('/coupons/{coupon}',[DiscountCodeController::class,'destroy'])->name('coupons.delete');
+        // Route::get('/get-coupons', [DiscountCodeController::class, 'getcoupons'] )->name('coupons.getcoupons');
 
          // temp-image-create
         Route::post('/upload-temp-image',[TempImagesController::class,'create'])->name('temp-images.create');

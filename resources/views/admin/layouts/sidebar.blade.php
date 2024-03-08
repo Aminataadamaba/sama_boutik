@@ -46,12 +46,12 @@
           </a>
         </li>
         <li class="menu-item">
-          <a href="auth-register-basic.html" class="menu-link" target="_blank">
+          <a href="{{ route('shipping.create') }}" class="menu-link" >
             <div data-i18n="Basic">Expedition</div>
           </a>
         </li>
         <li class="menu-item">
-          <a href="auth-forgot-password-basic.html" class="menu-link" target="_blank">
+          <a href="auth-forgot-password-basic.html" class="menu-link" >
             <div data-i18n="Basic">Commandes</div>
           </a>
         </li>
