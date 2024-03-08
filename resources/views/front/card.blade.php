@@ -61,7 +61,7 @@
                         @endif
 
                         <td class="align-middle"> {{$item->name}}</td></td>
-                        <td class="align-middle">${{ $item->price }}</td>
+                        <td class="align-middle">{{ $item->price }} fcf</td>
                         <td class="align-middle">
                             <div class="input-group quantity mx-auto" style="width: 100px;">
                                 <div class="input-group-btn">
@@ -77,7 +77,7 @@
                                 </div>
                             </div>
                         </td>
-                        <td class="align-middle">${{ $item->price*$item->qty }}</td>
+                        <td class="align-middle">{{ $item->price*$item->qty }} fcf</td>
                         <td class="align-middle"><button class="btn btn-sm btn-danger" onclick="deleteItem('{{ $item->rowId }}');"><i class="fa fa-times"></i></button></td>
                         @endforeach
 
@@ -98,7 +98,7 @@
                 <div class="border-bottom pb-2">
                     <div class="d-flex justify-content-between mb-3">
                         <h6>Subtotal</h6>
-                        <h6>${{ Cart::subtotal() }}</h6>
+                        <h6>{{ Cart::subtotal() }} fcf</h6>
                     </div>
 
                 </div>

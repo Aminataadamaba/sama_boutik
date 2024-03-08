@@ -9,7 +9,7 @@
 						<div class="row mb-2">
 							<div class="d-flex align-items-center justify-content-between">
 								<h1>Create Coupon Code</h1>
-							 <a href="{{ route('categories.index') }}" class="btn btn-primary">Back</a>
+							 <a href="{{ route('coupons.index') }}" class="btn btn-primary">Back</a>
 							</div>
 						</div>
 					</div>
@@ -19,7 +19,7 @@
 				<section class="content">
 					<!-- Default box -->
 					<div class="container-fluid">
-					<form action="" method="post" id="categoryForm" name="categoryForm">
+					<form action="" method="post" id="discountForm" name="discountForm">
 					  <div class="card">
 							<div class="card-body">
 								<div class="row">
@@ -37,13 +37,7 @@
                                             <p></p>
 										</div>
 									</div>
-                                    <div class="col-md-6">
-										<div class="mb-3">
-											<label for="description">Description</label>
-                                            <textarea name="description" id="description" cols="30" rows="10" class="form-control"></textarea>
-                                            <p></p>
-										</div>
-									</div>
+
                                     <div class="col-md-6">
 										<div class="mb-3">
 											<label for="max_uses">max Uses</label>
@@ -53,8 +47,8 @@
 									</div>
                                     <div class="col-md-6">
 										<div class="mb-3">
-											<label for="min_uses_ser">Min Uses User</label>
-											<input type="text" min_uses="min_uses_user" id="min_uses_user" class="form-control" placeholder="Min Uses Userr">
+											<label for="max_uses_ser">Max Uses User</label>
+											<input type="text" name="max_uses_user" id="max_uses_user" class="form-control" placeholder="Max Uses User">
                                             <p></p>
 										</div>
 									</div>
@@ -65,20 +59,21 @@
 											<select name="type" id="type" class="form-control">
 												<option value="percent">Percent</option>
 												<option value="fixed">Fixed</option>
+                                                <p></p>
 											</select>
 										</div>
 									</div>
                                     <div class="col-md-6">
 										<div class="mb-3">
 											<label for="discount_amount">Discount Amount</label>
-											<input type="text" name="discount_amount" id="discount_amount" class="form-control" placeholder="Discount Amount">
+											<input type="number" name="discount_amount" id="discount_amount" class="form-control" placeholder="Discount Amount">
                                             <p></p>
 										</div>
 									</div>
                                     <div class="col-md-6">
 										<div class="mb-3">
 											<label for="discount_amount">Min Amount</label>
-											<input type="text" name="min_amount" id="min_amount" class="form-control" placeholder="Min Amount">
+											<input type="number" name="min_amount" id="min_amount" class="form-control" placeholder="Min Amount">
                                             <p></p>
 										</div>
 									</div>
@@ -87,22 +82,30 @@
 										<div class="mb-3">
 											<label for="status">Status</label>
 											<select name="status" id="status" class="form-control">
-												<option value="1">1</option>
-												<option value="0">0</option>
+												<option value="1">Active</option>
+												<option value="0">Block</option>
+                                                <p></p>
 											</select>
 										</div>
 									</div>
                                     <div class="col-md-6">
 										<div class="mb-3">
-											<label for="starts_at">Starts  At</label>
-											<input type="text" name="starts_at" id="starts_at" class="form-control" placeholder="Starts At">
+											<label for="starts_at">Starts At</label>
+											<input autocomplete="off" type="text" name="starts_at" id="starts_at" class="form-control" placeholder="Starts At">
                                             <p></p>
 										</div>
 									</div>
                                     <div class="col-md-6">
 										<div class="mb-3">
 											<label for="expires_at">Expires At</label>
-											<input type="textr" name="expires_at" id="expires_at" class="form-control" placeholder="Expire At">
+											<input autocomplete="off" type="text" name="expires_at" id="expires_at" class="form-control" placeholder="Expire At">
+                                            <p></p>
+										</div>
+									</div>
+                                    <div class="col-md-6">
+										<div class="mb-3">
+											<label for="description">Description</label>
+                                            <textarea name="description" id="description" cols="30" rows="5" class="form-control"></textarea>
                                             <p></p>
 										</div>
 									</div>
@@ -112,7 +115,7 @@
 
 						<div class="pb-5 pt-3">
 							<button type="submit" class="btn btn-primary">Create</button>
-							<a href="{{ route('categories.index') }}" class="btn btn-outline-dark ml-3">Cancel</a>
+							<a href="{{ route('coupons.index') }}" class="btn btn-outline-dark ml-3">Cancel</a>
 						</div>
 					</form>
 					</div>
@@ -127,12 +130,26 @@
 
 <script>
 
-$("#categoryForm").submit(function(event){
+
+    $(document).ready(function(){
+        $('#starts_at').datetimepicker({
+                // options here
+                format:'Y-m-d H:i:s',
+        });
+        $('#expires_at').datetimepicker({
+                // options here
+                format:'Y-m-d H:i:s',
+        });
+    });
+
+
+$("#discountForm").submit(function(event){
   event.preventDefault();
   var element = $(this);
+
   $("button[type=submit]").prop('disabled',true);
   $.ajax({
-     url:'{{ route("categories.store") }}',
+     url:'{{ route("coupons.store") }}',
 	 type: 'post',
 	 data: element.serializeArray(),
 	 dataType: 'json',
@@ -141,24 +158,36 @@ $("#categoryForm").submit(function(event){
 
         if (response["status"] == true) {
 
-            window.location.href="{{ route('categories.index') }}";
+            window.location.href="{{ route('coupons.index') }}";
 
-            $("#name").removeClass('is-invalid').siblings('p').removeClass('invalid-feedback').html("");
-            $("#slug").removeClass('is-invalid').siblings('p').removeClass('invalid-feedback').html("");
+            $("#code").removeClass('is-invalid').siblings('p').removeClass('invalid-feedback').html("");
+            $("#discount_amount").removeClass('is-invalid').siblings('p').removeClass('invalid-feedback').html("");
+            $("#starts_at").removeClass('is-invalid').siblings('p').removeClass('invalid-feedback').html("");
+            $("#expires_at").removeClass('is-invalid').siblings('p').removeClass('invalid-feedback').html("");
 
         }else{
               var errors = response['errors'];
 
-        if (errors['name']) {
-            $("#name").addClass('is-invalid').siblings('p').addClass('invalid-feedback').html(errors['name']);
+        if (errors['code']) {
+            $("#code").addClass('is-invalid').siblings('p').addClass('invalid-feedback').html(errors['code']);
         }else{
-            $("#name").removeClass('is-invalid').siblings('p').removeClass('invalid-feedback').html("");
+            $("#code").removeClass('is-invalid').siblings('p').removeClass('invalid-feedback').html("");
         }
 
-        if (errors['slug']) {
-            $("#slug").addClass('is-invalid').siblings('p').addClass('invalid-feedback').html(errors['slug']);
+        if (errors['discount_amount']) {
+            $("#discount_amount").addClass('is-invalid').siblings('p').addClass('invalid-feedback').html(errors['discount_amount']);
         }else{
-            $("#slug").removeClass('is-invalid').siblings('p').removeClass('invalid-feedback').html("");
+            $("#discount_amount").removeClass('is-invalid').siblings('p').removeClass('invalid-feedback').html("");
+        }
+        if (errors['starts_at']) {
+            $("#starts_at").addClass('is-invalid').siblings('p').addClass('invalid-feedback').html(errors['starts_at']);
+        }else{
+            $("#starts_at").removeClass('is-invalid').siblings('p').removeClass('invalid-feedback').html("");
+        }
+        if (errors['expires_at']) {
+            $("#expires_at").addClass('is-invalid').siblings('p').addClass('invalid-feedback').html(errors['expires_at']);
+        }else{
+            $("#expires_at").removeClass('is-invalid').siblings('p').removeClass('invalid-feedback').html("");
         }
 
         }
@@ -167,49 +196,6 @@ $("#categoryForm").submit(function(event){
         console.log("Something went wrong");
      }
   });
-});
-
-  $("#name").change(function(){
-    element = $(this);
-    $("button[type=submit]").prop('disabled',true);
-    $.ajax({
-       url:'{{ route("getSlug") }}',
-	   type: 'get',
-	   data: {title: element.val()},
-	   dataType: 'json',
-       success: function(response){
-        $("button[type=submit]").prop('disabled',false);
-        if (response["status"] == true) {
-            $("#slug").val(response["slug"]);
-
-        }
-
-     }
-
-     });
-  });
-
-  Dropzone.autoDiscover = false;
-const dropzone = $("#image").dropzone({
-    init: function() {
-        this.on('addedfile', function(file) {
-            if (this.files.length > 1) {
-                this.removeFile(this.files[0]);
-            }
-        });
-    },
-    url: "{{ route('temp-images.create') }}",
-    maxFiles: 1,
-    paramName: 'image',
-    addRemoveLinks: true,
-    acceptedFiles: "image/jpeg, image/png, image/gif",
-    headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    },
-    success: function(file, response) {
-        $("#image_id").val(response.image_id);
-        //console.log(response);
-    }
 });
 
 

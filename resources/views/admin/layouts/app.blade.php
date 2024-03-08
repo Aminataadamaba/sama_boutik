@@ -45,6 +45,7 @@
     <link rel="stylesheet" href="{{ asset('admin_asset/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}" />
 
     <link rel="stylesheet" href="{{ asset('admin_asset/vendor/libs/apex-charts/apex-charts.css') }}" />
+    <link rel="stylesheet" href="{{ asset('admin_asset/css/datetimepicker.css') }}" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- Page CSS -->
@@ -169,6 +170,7 @@
 
     <!-- Main JS -->
     <script src="{{ asset('admin_asset/js/main.js') }}"></script>
+    <script src="{{ asset('admin_asset/js/datetimepicker.js') }}"></script>
 
     <!-- Page JS -->
     <script src="{{ asset('admin_asset/plugins/summernote/summernote-bs4.min.js') }}"></script>

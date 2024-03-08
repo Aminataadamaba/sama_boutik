@@ -111,20 +111,39 @@
                     <div class="border-bottom pt-3 pb-2">
                         <div class="d-flex justify-content-between mb-3">
                             <h6>Subtotal</h6>
-                            <h6>${{ Cart::subtotal() }}</h6>
+                            <h6>{{ Cart::subtotal() }} fcf</h6>
+                        </div>
+                        <div class="d-flex justify-content-between mb-3">
+                            <h6>Discount</h6>
+                            <h6><strong id="discount_Value" name="discount">{{ $discount }} fcf</strong></h6>
                         </div>
                         <div class="d-flex justify-content-between">
                             <h6 class="font-weight-medium">Shipping</h6>
-                            <h6 class="font-weight-medium"><strong id="ShippingAmount">${{ number_format($totalShippingCharge,2) }}</strong></h6>
+                            <h6 class="font-weight-medium"><strong id="ShippingAmount">${{ number_format($totalShippingCharge,2) }} fcf</strong></h6>
                         </div>
                     </div>
                     <div class="pt-2">
                         <div class="d-flex justify-content-between mt-2">
                             <h5>Total</h5>
-                            <h5><strong id="grandTotal">${{ number_format( $grandTotal,2)}}</strong></h5>
+                            <h5><strong id="grandTotal">{{ number_format( $grandTotal,2)}} fcf</strong></h5>
                         </div>
                     </div>
                 </div>
+
+                <div class="input-group apply-coupan mt-4">
+                    <input type="text" placeholder="Coupon Code" class="form-control" name="discount_code" id="discount_code">
+                    <button class="btn btn-dark" type="button" id="apply-discount">Apply Coupon</button>
+                </div>
+                <div id="discount-response-wrapper">
+                    @if(Session::has('code'))
+                    <div class="mt-4" id="discount-response">
+                        <strong>{{ Session::get('code')->code }}</strong>
+                        <a class="btn btn-sm btn-danger" id="remove-discount"><i class="fa fa-times"></i></a>
+                    </div>
+                  @endif
+                </div>
+
+                <br>
                 <div class="mb-5">
                     <h5 class="section-title position-relative mb-3"><span class="bg-secondary pr-3">Payment Method</span></h5>
                     <div class="bg-light p-30">
@@ -163,7 +182,7 @@
                             </div>
                         </div>
                         <br>
-                        <button type="submit" class="btn btn-block btn-primary font-weight-bold py-3">Place Order</button>
+                        <button type="submit" class="btn btn-block btn-primary font-weight-bold py-3" id="country">Place Order</button>
                     </div>
                 </div>
 
@@ -278,21 +297,77 @@
     });
 
     $("#country").change(function(){
-        $.ajax({
+    $.ajax({
         url: '{{ route("front.getOrderSummery") }}',
         type: 'post',
         data: {country_id: $(this).val()},
         dataType: 'json',
         success: function(response){
-
             if (response.status == true){
-                $("#ShippingAmount").html('$'+respone.shippingCharge);
-                $("#grandTotal").html('$'+respone.grandTotal);
-
+                $("#ShippingAmount").html('$'+response.ShippingCharge);
+                $("#grandTotal").html('$'+response.grandTotal);
             }
-
         }
     });
+});
+
+
+    $("#apply-discount").click(function(){
+    $.ajax({
+        url: '{{ route("front.applyDiscount") }}',
+        type: 'post',
+        data: {code: $("#discount_code").val(), country_id: $("#country").val()},
+        dataType: 'json',
+        success: function(response){
+            if (response.status == true) {
+                $("#ShippingAmount").html('$'+response.ShippingCharge);
+                $("#grandTotal").html('$'+response.grandTotal);
+                $("#discount_Value").html('$'+response.discount);
+                $("#discount-response-wrapper").html(response.discountString);
+
+            }else {
+                $("#discount-response-wrapper").html("<span class='text-danger'>"+response.message+"</span>");
+            }
+        }
     });
+});
+$('body').on('click', "#remove-discount",function(){
+    $.ajax({
+        url: '{{ route("front.removeCoupon") }}',
+        type: 'post',
+        data: {country_id: $("#country").val()},
+        dataType: 'json',
+        success: function(response){
+            if (response.status == true) {
+                $("#ShippingAmount").html('$'+response.ShippingCharge);
+                $("#grandTotal").html('$'+response.grandTotal);
+                $("#discount_Value").html('$'+response.discount);
+                $("#discount-response").html('');
+                $("#discount_code").html('');
+
+
+            }
+        }
+    });
+});
+// $("#remove-discount").click(function(){
+//     $.ajax({
+//         url: '{{ route("front.removeCoupon") }}',
+//         type: 'post',
+//         data: {country_id: $("#country").val()},
+//         dataType: 'json',
+//         success: function(response){
+//             if (response.status == true) {
+//                 $("#ShippingAmount").html('$'+response.ShippingCharge);
+//                 $("#grandTotal").html('$'+response.grandTotal);
+//                 $("#discount_Value").html('$'+response.discount);
+//                 $("#discount-response").html('');
+
+
+//             }
+//         }
+//     });
+// });
+
 </script>
 @endsection

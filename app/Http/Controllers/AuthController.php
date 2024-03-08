@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 use App\Models\Category;
 
+use App\Models\Order;
+use App\Models\OrderItem;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -90,5 +92,30 @@ class AuthController extends Controller
     Auth::logout();
     return redirect()->route('account.login')->with('success','Your successfully logget out!');
 
+   }
+
+   public function orders(Request $request){
+    $data = [];
+    $user = Auth::user();
+
+    $orders = Order::where('user_id', $user->id)->orderBy('created_at','DESC')->get();
+    $categories = Category::all(); // Récupérez toutes les catégories
+    $data['categories'] = $categories; // Passez les catégories à la vue
+    $data['orders'] = $orders;
+    return view('front.account.order',$data);
+   }
+
+   public function orderDetail($id){
+    $data = [];
+    $user = Auth::user();
+    $order = Order::where('user_id', $user->id)->where('id',$id)->first();
+
+
+    $orderItems =  OrderItem::where('order_id', $id)->get();
+    $categories = Category::all();
+    $data['categories'] = $categories;
+    $data['order'] = $order;
+    $data['orderItems'] = $orderItems;
+    return view('front.account.order-detail',$data);
    }
 }
