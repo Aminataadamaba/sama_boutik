@@ -9,7 +9,6 @@
                 <div class="d-flex align-items-center justify-content-between">
                     <h1>Edit Product</h1>
                     <a href="{{ route('products.index') }}" class="btn btn-primary">Back</a>
-                    <a href="{{ route('products.export') }}" class="btn btn-success">Exporter Mes produits/a>
                 </div>
             </div>
         </div>
