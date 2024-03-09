@@ -55,8 +55,8 @@
                             </div>
                           </div>
                           <span class="fw-semibold d-block mb-1">Total Client</span>
-                          <h3 class="card-title mb-2">$12,628</h3>
 
+                          <h3 class="card-title mb-2">{{ $totalClients }}</h3>
                         </div>
                       </div>
                     </div>
@@ -162,9 +162,8 @@
                               </div>
                             </div>
                           </div>
-                          <span class="d-block mb-1">Payments</span>
-                          <h3 class="card-title text-nowrap mb-2">$2,456</h3>
-
+                          <span class="d-block mb-1">Category</span>
+                          <h3 class="card-title text-nowrap mb-2">{{ $totalCategory }}</h3>
                         </div>
                       </div>
                     </div>
@@ -186,7 +185,7 @@
                             </div>
                           </div>
                           <span class="fw-semibold d-block mb-1">Total Produits</span>
-                          <h3 class="card-title mb-2">$14,857</h3>
+                          <h3 class="card-title mb-2">{{ $totalProduct }}</h3>
 
                         </div>
                       </div>

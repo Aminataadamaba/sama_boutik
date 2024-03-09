@@ -151,6 +151,9 @@
                     @endif
                   {{-- </a> --}}
                     <div class="product-action">
+                        {{-- @if ()
+
+                        @endif --}}
                         <a class="btn btn-outline-dark btn-square" href="javascript:void();" onclick="addToCart({{ $product->id }});"><i class="fa fa-shopping-cart"></i></a>
                         <a onclick="addToWishlist({{ $product->id }})"  class="btn btn-outline-dark btn-square" href="javascript:void(0);"><i class="far fa-heart"></i></a>
                         <a class="btn btn-outline-dark btn-square" href="#"><i class="fa fa-sync-alt"></i></a>

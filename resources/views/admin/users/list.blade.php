@@ -10,7 +10,7 @@
             <div class="row mb-2">
                 <div class="d-flex align-items-center justify-content-between">
                     <h1>List Users</h1>
-                    <a href="{{ route('users.create') }}" class="btn btn-primary">New User</a>
+                    <a href="{{ route('client') }}" class="btn btn-primary">PDF</a>
                 </div>
             </div>
         </div>

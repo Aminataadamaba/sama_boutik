@@ -38,10 +38,9 @@ use Illuminate\Http\Request;
 // Route::get('/test', function () {
 //     orderEmail(14);
 // });
-
 // front end
 Route::get('/', [FrontController::class, 'index'] )->name('front.home');
-
+Route::get('/client', [UserController::class, 'generePdf'])->name('client');
 
 // Shop
 Route::get('/shop', [ShopController::class, 'index'])->name('front.shop');
