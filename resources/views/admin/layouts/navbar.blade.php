@@ -46,11 +46,11 @@
                     </div>
                   </div>
                   <div class="flex-grow-1">
-                    @if(Auth::guard('admin')->check()) {{-- Vérifiez si l'administrateur est connecté --}}
+
                     <span class="fw-semibold d-block">{{ Auth::guard('admin')->user()->name }}</span>
                     <small class="text-muted">Admin</small>
                     <small class="text-muted">{{ Auth::guard('admin')->user()->email }}</small>
-                @endif
+           
                   </div>
                 </div>
               </a>

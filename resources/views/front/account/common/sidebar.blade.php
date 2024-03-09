@@ -12,7 +12,7 @@
         </a>
     </li>
     <li class="nav-item" style="border-top: 1px solid #0e2a47; margin-bottom: 5px; background-color: #363636;">
-        <a href="wishlist.php" class="nav-link font-weight-bold text-white">
+        <a href="{{ route('account.wishlist') }}" class="nav-link font-weight-bold text-white">
             <i class="fas fa-heart mr-2"></i> Wishlist
         </a>
     </li>

@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\User;
+use App\Models\Wishlist;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
@@ -119,5 +120,32 @@ class AuthController extends Controller
     $orderItemsCount = OrderItem::where('order_id', $id)->count();
     $data['orderItemsCount'] = $orderItemsCount;
     return view('front.account.order-detail',$data);
+   }
+
+   public function wishlist(){
+    $wishlists = Wishlist::where('user_id', Auth::user()->id)->with('product')->get();
+    $data = [];
+    $categories = Category::all();
+    $data['categories'] = $categories;
+    $data['wishlists'] = $wishlists;
+    return view('front.account.wishlist',$data);
+   }
+   public function removeProductFormWishList(Request $request){
+    $wishlist = Wishlist::where('user_id', Auth::user()->id)->where('product_id',$request->id)->first();
+
+    if($wishlist == null){
+        session()->flash('error','Product already removed.');
+        return  response()->json([
+            'status' =>true,
+        ]);
+    }else{
+        Wishlist::where('user_id', Auth::user()->id)->where('product_id',$request->id)->delete();
+        session()->flash('success','Product removed successfully.');
+        return  response()->json([
+            'status' =>true,
+
+        ]);
+    }
+
    }
 }

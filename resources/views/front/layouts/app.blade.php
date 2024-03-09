@@ -266,10 +266,31 @@
     </div>
 </div>
 <!-- Footer End -->
+<!-- Button trigger modal -->
+<div class="modal fade" id="wishlistModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Success</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Your modal body content here -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+  <!-- Modal -->
+
 
 <a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
-
-
+  <!-- Modal -->
 <!-- JavaScript Libraries -->
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
@@ -290,7 +311,7 @@
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
        });
-       function addToCart(id){
+function addToCart(id){
    $.ajax({
     url: '{{ route("front.addToCart") }}',
     type: 'post',
@@ -301,6 +322,24 @@
             window.location.href= "{{ route('front.cart') }}";
         }else{
             alert(response.message);
+        }
+
+    }
+   });
+}
+function addToWishlist(id){
+    $.ajax({
+    url: '{{ route("front.addToWishlist") }}',
+    type: 'post',
+    data: {id:id},
+    dataType: 'json',
+    success: function (response) {
+        if (response.status == true) {
+            $("#wishlistModel .modal-body").html(response.message);
+            $("#wishlistModel").modal('show');
+            // window.location.href= "{{ route('front.cart') }}";
+        }else{
+            window.location.href= "{{ route('account.login') }}";
         }
 
     }

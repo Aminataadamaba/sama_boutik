@@ -153,7 +153,7 @@
                                 @endif
                                 <div class="product-action">
                                     <a class="btn btn-outline-dark btn-square" href="javascript:void();" onclick="addToCart({{ $product->id }});"><i class="fa fa-shopping-cart"></i></a>
-                                    <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
+                                    <a onclick="addToWishlist({{ $product->id }})"  class="btn btn-outline-dark btn-square" href="javascript:void(0);"><i class="far fa-heart"></i></a>
                                     <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a>
                                     <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-search"></i></a>
                                 </div>
@@ -161,9 +161,9 @@
                             <div class="text-center py-4">
                                 <a class="h6 text-decoration-none text-truncate" href="{{ route("front.product",$product->slug) }}">{{ $product->title }}</a>
                                 <div class="d-flex align-items-center justify-content-center mt-2">
-                                    <h5>${{ $product->price }}</h5>
+                                    <h5>{{ $product->price }} Fcf</h5>
                                     @if($product->compare_prise > 0)
-                                     <h6 class="text-muted ml-2"><del>${{ $product->compare_price }}</del></h6>
+                                     <h6 class="text-muted ml-2"><del>{{ $product->compare_price }} Fcf</del></h6>
                                     @endif
 
                                 </div>

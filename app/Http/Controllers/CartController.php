@@ -339,10 +339,22 @@ public function processCheckout(Request $request){
                 $orderItem->price = $item->price;
                 $orderItem->total = $item->price*$item->qty;
                 $orderItem->save();
+               // Update Product stock
+
+               $productData =Product::find($item->id);
+               if($productData->track_qty == 'Yes'){
+                $currentQty = $productData->qty;
+                $updateQty = $currentQty- $item->qty;
+                $productData->qty = $updateQty;
+                $productData->save();
+
+               }
 
             }
+
+
             // send Order Email
-            orderEmail($order->id,'customer');
+          //  orderEmail($order->id,'customer');
             session()->flash('success','You have successfully placed your order');
 
             Cart::destroy();
