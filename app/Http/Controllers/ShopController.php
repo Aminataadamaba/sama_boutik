@@ -36,6 +36,18 @@ class ShopController extends Controller
         $products = $products->whereIn('brand_id', $brandsArray);
     }
 
+    if ($request->get('price_max') != '' && $request->get('price_min') != '') {
+        if ($request->get('price_max') == 1000) {
+            $products = $products->whereBetween('price',[intval($request->get('price_min')),1000000]);
+        }else{
+            $products = $products->whereBetween('price',[intval($request->get('price_min')),intval($request->get('price_max')),10000000]);
+        }
+    }
+
+    if (!empty($request->get('search'))) {
+        $products = $products->where('title', 'like','%'. $request->get('search') .'%');
+    }
+
     if ($request->get('sort' != '')){
         if ($request->get('sort') == 'latest') {
             $products = $products->orderBy('id','DESC');
@@ -76,7 +88,7 @@ class ShopController extends Controller
          // Fetch remated product
          if($product->related_products != ''){
           $productArray = explode(',', $product->related_products);
-          $relatedProducts = Product::whereIn('id', $productArray)->get();
+          $relatedProducts = Product::whereIn('id', $productArray)->where('status',1)->get();
          }
          $data['product'] = $product;
          $data['relatedProducts'] = $relatedProducts;

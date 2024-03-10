@@ -152,18 +152,27 @@
                                  <img  src="{{ asset('front-assets/img/product-3.jpg') }}" alt="" class="img-fluid w-100">
                                 @endif
                                 <div class="product-action">
+                                    @if ($product->track_qty == 'Yes')
+                                    @if($product->qty > 0)
                                     <a class="btn btn-outline-dark btn-square" href="javascript:void();" onclick="addToCart({{ $product->id }});"><i class="fa fa-shopping-cart"></i></a>
+                                    @else
+                                    <a class="btn btn-dark" href="javascript:void();" ><i class="fa fa-shopping-cart"></i>Out of stock</a>
+                                    @endif
+                                    @else
+                                    <a class="btn btn-outline-dark btn-square" href="javascript:void();" onclick="addToCart({{ $product->id }});"><i class="fa fa-shopping-cart"></i></a>
+                                    @endif
                                     <a onclick="addToWishlist({{ $product->id }})"  class="btn btn-outline-dark btn-square" href="javascript:void(0);"><i class="far fa-heart"></i></a>
-                                    <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a>
-                                    <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-search"></i></a>
+                                    <a class="btn btn-outline-dark btn-square" href="#"><i class="fa fa-sync-alt"></i></a>
+                                    <a class="btn btn-outline-dark btn-square" href="#"><i class="fa fa-search"></i></a>
+
                                 </div>
                             </div>
                             <div class="text-center py-4">
                                 <a class="h6 text-decoration-none text-truncate" href="{{ route("front.product",$product->slug) }}">{{ $product->title }}</a>
                                 <div class="d-flex align-items-center justify-content-center mt-2">
-                                    <h5>{{ $product->price }} Fcf</h5>
+                                    <h5>${{ $product->price }}</h5>
                                     @if($product->compare_prise > 0)
-                                     <h6 class="text-muted ml-2"><del>{{ $product->compare_price }} Fcf</del></h6>
+                                     <h6 class="text-muted ml-2"><del>${{ $product->compare_price }}</del></h6>
                                     @endif
 
                                 </div>
@@ -212,6 +221,11 @@
 
         console.log(brands.toString());
         var url = '{{  url()->current() }}?'
+        var keyword = $("#search").val();
+
+        if (keyword.lenght > 0) {
+            url += '$search='+keyword;
+        }
 
         // sorting
         // url += '$sort='.$("#sort").val()

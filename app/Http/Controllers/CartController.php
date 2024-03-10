@@ -354,7 +354,7 @@ public function processCheckout(Request $request){
 
 
             // send Order Email
-          //  orderEmail($order->id,'customer');
+             orderEmail($order->id,'customer');
             session()->flash('success','You have successfully placed your order');
 
             Cart::destroy();

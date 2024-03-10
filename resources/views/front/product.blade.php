@@ -127,7 +127,16 @@
                                 </button>
                             </div>
                         </div>
+
+                        @if ($product->track_qty == 'Yes')
+                        @if($product->qty > 0)
                         <a href="javascript:void();" onclick="addToCart({{ $product->id }});" class="btn btn-primary px-3"><i class="fa fa-shopping-cart mr-1"></i> Add To Cart</a>
+                        @else
+                          <a class="btn btn-dark" href="javascript:void();" ><i class="fa fa-shopping-cart"></i>Out of stock</a>
+                        @endif
+                        @else
+                        <a href="javascript:void();" onclick="addToCart({{ $product->id }});" class="btn btn-primary px-3"><i class="fa fa-shopping-cart mr-1"></i> Add To Cart</a>
+                        @endif
                     </div>
                     <div class="d-flex pt-2">
                         <strong class="text-dark mr-2">Share on:</strong>
@@ -257,6 +266,7 @@
             </div>
         </div>
     </div>
+
     <!-- Shop Detail End -->
     <!-- Products Start -->
     @if (!empty($relatedProducts))
@@ -278,14 +288,22 @@
                                 <img  src="{{ asset('front-assets/img/product-1.jpg') }}" alt="" class="img-fluid w-100">
                             @endif
                             <div class="product-action">
-                                <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
-                                <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
-                                <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a>
-                                <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-search"></i></a>
+                                @if ($relProduct->track_qty == 'Yes')
+                                @if($relProduct->qty > 0)
+                                  <a class="btn btn-outline-dark btn-square" href="javascript:void();" onclick="addToCart({{ $relProduct->id }});"><i class="fa fa-shopping-cart"></i></a>
+                                @else
+                                  <a class="btn btn-dark" href="javascript:void();" ><i class="fa fa-shopping-cart"></i>Out of stock</a>
+                                @endif
+                                @else
+                                <a class="btn btn-outline-dark btn-square" href="javascript:void();" onclick="addToCart({{ $relProduct->id }});"><i class="fa fa-shopping-cart"></i></a>
+                                @endif
+                                <a onclick="addToWishlist({{ $relProduct->id }})"  class="btn btn-outline-dark btn-square" href="javascript:void(0);"><i class="far fa-heart"></i></a>
+                                <a class="btn btn-outline-dark btn-square" href="#"><i class="fa fa-sync-alt"></i></a>
+                                <a class="btn btn-outline-dark btn-square" href="#"><i class="fa fa-search"></i></a>
                             </div>
                         </div>
                         <div class="text-center py-4">
-                            <a class="h6 text-decoration-none text-truncate" href="{{ route("front.product",$product->slug) }}">{{ $relProduct->title }}</a>
+                            <a class="h6 text-decoration-none text-truncate" href="{{ route("front.product",$relProduct->slug) }}">{{ $relProduct->title }}</a>
                             <div class="d-flex align-items-center justify-content-center mt-2">
                                 <h5>${{ $relProduct->price }}</h5>
 
@@ -311,6 +329,8 @@
         </div>
     </div>
     @endif
+    
+
     <!-- Products End -->
 
 @endsection

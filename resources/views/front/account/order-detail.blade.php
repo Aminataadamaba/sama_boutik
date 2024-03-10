@@ -73,7 +73,7 @@
                                         <h6 class="heading-xxxs text-muted">Order Amount:</h6>
                                         <!-- Text -->
                                         <p class="mb-0 fs-sm fw-bold">
-                                        {{ $order->grand_total }} fcf
+                                        ${{ $order->grand_total }}
                                         </p>
                                     </div>
                                 </div>
@@ -112,7 +112,7 @@
                                         <!-- Title -->
                                         <p class="mb-4 fs-sm fw-bold">
                                             <a class="text-body" href="">{{ $item->name }} X {{ $item->qty }}</a> <br>
-                                            <span class="text-muted">{{ $item->total }} fcf</span>
+                                            <span class="text-muted">${{ $item->total }}</span>
                                         </p>
                                     </div>
                                 </div>
@@ -130,19 +130,19 @@
                         <ul class="list-group justify-content-between">
                             <li class="list-group-item d-flex w-100 justify-content-between">
                                 <span>Subtotal</span>
-                                <span>{{ $order->subtotal }} fcf</span>
+                                <span>${{ $order->subtotal }}</span>
                             </li>
                             <li class="list-group-item d-flex w-100 justify-content-between">
                                 <span>Discount {{ (!empty($order->coupon_code)) ? '('.$order->coupon_code.')' : '' }}</span>
-                                <span>{{ $order->discount }} fcf</span>
+                                <span>${{ $order->discount }}</span>
                             </li>
                             <li class="list-group-item d-flex w-100 justify-content-between">
                                 <span>Shipping</span>
-                                <span> {{ $order->shipping }} fcf</span>
+                                <span>${{ $order->shipping }}</span>
                             </li>
                             <li class="list-group-item d-flex w-100 justify-content-between fs-lg fw-bold">
                                 <span>Total</span>
-                                <span> {{ $order->grand_total}} fcf</span>
+                                <span>${{ $order->grand_total}}</span>
                             </li>
                         </ul>
                     </div>
