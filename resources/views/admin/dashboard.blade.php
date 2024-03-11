@@ -81,10 +81,11 @@
                               </div>
                             </div>
                           </div>
-                          <span>Total Sexe</span>
-                          <h3 class="card-title text-nowrap mb-1">$4,679</h3>
+                          <span>Sexe Feminin</span>
+                          <h3 class="card-title text-nowrap mb-1"> {{ $totalFemaleClients }}</h3>
 
                         </div>
+
                       </div>
                     </div>
                   </div>
@@ -98,25 +99,24 @@
                         <div id="totalRevenueChart" class="px-2"></div>
                       </div>
                       <div class="col-md-4">
-                        <div class="card-body">
-                          <div class="text-center">
-                            <div class="dropdown">
-                              <button
-                                class="btn btn-sm btn-outline-primary dropdown-toggle"
-                                type="button"
-                                id="growthReportId"
-                                data-bs-toggle="dropdown"
-                                aria-haspopup="true"
-                                aria-expanded="false"
-                              >
-                                2022
-                              </button>
-
+                        <div class="col-md-4">
+                            <div class="card-body">
+                                <div class="text-center">
+                                    <div class="dropdown">
+                                        <button class="btn btn-sm btn-outline-primary dropdown-toggle" type="button" id="growthReportId" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            Sexe
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="growthReportId">
+                                            <span class="dropdown-item-text">Total Male Clients: {{ $totalMaleClients }}</span>
+                                            <span class="dropdown-item-text">Total Female Clients: {{ $totalFemaleClients }}</span>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                          </div>
                         </div>
+
                         <div id="growthChart"></div>
-                        <div class="text-center fw-semibold pt-3 mb-2">62% Company Growth</div>
+                        <div class="text-center fw-semibold pt-3 mb-2">total de sexe</div>
 
                         <div class="d-flex px-xxl-4 px-lg-2 p-4 gap-xxl-3 gap-lg-1 gap-3 justify-content-between">
                           <div class="d-flex">
@@ -124,8 +124,8 @@
                               <span class="badge bg-label-primary p-2"><i class="bx bx-dollar text-primary"></i></span>
                             </div>
                             <div class="d-flex flex-column">
-                              <small>2022</small>
-                              <h6 class="mb-0">$32.5k</h6>
+                              <small>Female</small>
+                              <h6 class="mb-0">{{ $totalFemaleClients }}</h6>
                             </div>
                           </div>
                           <div class="d-flex">
@@ -133,8 +133,8 @@
                               <span class="badge bg-label-info p-2"><i class="bx bx-wallet text-info"></i></span>
                             </div>
                             <div class="d-flex flex-column">
-                              <small>2021</small>
-                              <h6 class="mb-0">$41.2k</h6>
+                              <small>Male</small>
+                              <h6 class="mb-0">{{ $totalMaleClients }}</h6>
                             </div>
                           </div>
                         </div>

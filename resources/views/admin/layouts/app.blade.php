@@ -168,7 +168,7 @@
     <!-- Vendors JS -->
     <script src="{{ asset('admin_asset/vendor/libs/apex-charts/apexcharts.js') }}"></script>
 
-    <!-- Main JS -->
+    <!-- Main JS -->*
     <script src="{{ asset('admin_asset/js/main.js') }}"></script>
     <script src="{{ asset('admin_asset/js/datetimepicker.js') }}"></script>
 

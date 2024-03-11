@@ -74,7 +74,7 @@
 
                                         <img src="{{ asset('storage/uploads/product/large/'.$productImage->image) }}" class="img-thumbnail" width="50" />
                                     @else
-                                        <img src="{{ asset('admin-assets/img/default-150x150.png') }}" class="img-thumbnail" width="50"  />
+                                        <img src="{{ asset('admin_asset/img/default-150x150.png') }}" class="img-thumbnail" width="50"  />
                                     @endif
                                 </td>
 

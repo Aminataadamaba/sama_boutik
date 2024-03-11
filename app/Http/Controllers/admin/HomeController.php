@@ -18,7 +18,12 @@ class HomeController extends Controller
        $totalProduct = Product::count();
        $totalCategory = Category::count();
 
-        return view('admin.dashboard',compact('totalClients','totalProduct','totalCategory'));
+       $totalMaleClients = User::where('genre', 'masculin')->count();
+      $totalFemaleClients = User::where('genre', 'feminin')->count();
+      $totalSexe = $totalFemaleClients + $totalMaleClients;
+
+
+        return view('admin.dashboard',compact('totalClients','totalProduct','totalCategory','totalSexe','totalMaleClients','totalFemaleClients'));
         // $admin = Auth::guard('admin')->user();
 
         // echo 'Welcome'.$admin->name.' <a href="'.route('admin.logout').'">Logout</a> ';
