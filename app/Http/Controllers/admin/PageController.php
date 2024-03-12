@@ -16,7 +16,7 @@ class PageController extends Controller
         $pages = $pages->where('name','like','%'.$request->get('keyword').'%');
     }
     $pages = $pages->paginate(10);
-    return view('admin.category.list',compact('pages'));
+    return view('admin.pages.list',compact('pages'));
 
    }
 
@@ -68,7 +68,7 @@ class PageController extends Controller
 
     $validator = Validator::make($request->all(), [
         'name'=> 'required',
-        'slug'=> 'required|unique:pages',
+        'slug'=> 'required',
         ]);
         $page = Page::find($id);
         if($validator->passes()){

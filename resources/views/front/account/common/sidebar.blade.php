@@ -17,7 +17,7 @@
         </a>
     </li>
     <li class="nav-item" style="border-top: 1px solid #0e2a47; margin-bottom: 5px; background-color: #363636;">
-        <a href="change-password.php" class="nav-link font-weight-bold text-white">
+        <a href="{{ route('account.changePassword') }}" class="nav-link font-weight-bold text-white">
             <i class="fas fa-lock mr-2"></i> Change Password
         </a>
     </li>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Page;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\Wishlist;
@@ -61,6 +62,19 @@ class FrontController extends Controller
             'message' => '<div class="alert alert-success"><strong>"'.$product->title.'"</strong> Product added in your wishlist.></div>'
         ]);
 
+
+    }
+
+    public function page($slug){
+        $page = Page::where('slug', $slug)->first();
+        if($page == null){
+            abort(404);
+        }
+        $categories = Category::all(); // Récupérez toutes les catégories
+        $data['categories'] = $categories; // Passez les catégories à la vue
+        return view('front.page',$data,[
+            'page'=> $page
+        ]);
 
     }
 }

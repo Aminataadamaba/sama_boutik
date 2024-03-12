@@ -8,7 +8,7 @@
 					<div class="container-fluid my-2">
 						<div class="row mb-2">
 							<div class="d-flex align-items-center justify-content-between">
-								<h1>Create Category</h1>
+								<h1>Edit Pages</h1>
 							 <a href="{{ route('pages.index') }}" class="btn btn-primary">Back</a>
 							</div>
 						</div>
@@ -69,7 +69,7 @@ $("#pageForm").submit(function(event){
   var element = $(this);
   $("button[type=submit]").prop('disabled',true);
   $.ajax({
-     url:'{{ route("pages.store") }}',
+     url:'{{ route("pages.update",$page->id) }}',
 	 type: 'put',
 	 data: element.serializeArray(),
 	 dataType: 'json',
