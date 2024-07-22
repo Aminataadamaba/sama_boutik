@@ -45,7 +45,7 @@
     <link rel="stylesheet" href="{{ asset('admin_asset/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}" />
 
     <link rel="stylesheet" href="{{ asset('admin_asset/vendor/libs/apex-charts/apex-charts.css') }}" />
-    <link rel="stylesheet" href="{{ asset('admin_asset/css/datetimepicker.css') }}" />
+   
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- Page CSS -->

@@ -41,56 +41,56 @@ use Illuminate\Http\Request;
 //     orderEmail(14);
 // });
 // front end
-Route::get('/', [FrontController::class, 'index'] )->name('front.home');
-Route::get('/client', [UserController::class, 'generePdf'])->name('client');
+// Route::get('/', [FrontController::class, 'index'] )->name('front.home');
+// Route::get('/client', [UserController::class, 'generePdf'])->name('client');
 
-// Shop
-Route::get('/shop', [ShopController::class, 'index'])->name('front.shop');
-Route::get('/shop/{categorySlug?}/{subCategorySlug?}', [ShopController::class, 'index'])->name('front.shop');
-Route::get('/product/{slug}', [ShopController::class,'product'])->name('front.product');
+// // Shop
+// Route::get('/shop', [ShopController::class, 'index'])->name('front.shop');
+// Route::get('/shop/{categorySlug?}/{subCategorySlug?}', [ShopController::class, 'index'])->name('front.shop');
+// Route::get('/product/{slug}', [ShopController::class,'product'])->name('front.product');
 
-// Cart
-Route::get('/cart', [CartController::class,'cart'])->name('front.cart');
-Route::post('/add-to-cart', [CartController::class,'addToCart'])->name('front.addToCart');
-Route::post('/update-cart', [CartController::class,'updateCart'])->name('front.updateCart');
-Route::post('/delete-item', [CartController::class,'deleteItem'])->name('front.deleteItem.cart');
-Route::get('/checkout', [CartController::class,'checkout'])->name('front.checkout');
-Route::post('/process-checkout', [CartController::class,'processCheckout'])->name('front.processCheckout');
-Route::get('/thanks/{orderId}', [CartController::class,'thankyou'])->name('front.thankyou');
-Route::post('/get-order-summery', [CartController::class,'getOrderSummery'])->name('front.getOrderSummery');
-Route::post('/apply-discount', [CartController::class,'applyDiscount'])->name('front.applyDiscount');
-Route::post('/remove-discount', [CartController::class,'removeCoupon'])->name('front.removeCoupon');
-Route::post('/add-to-wishlist',[FrontController::class,'addToWishlist'])->name('front.addToWishlist');
-Route::get('/page/{slug}',[FrontController::class,'page'])->name('front.page');
-
-
+// // Cart
+// Route::get('/cart', [CartController::class,'cart'])->name('front.cart');
+// Route::post('/add-to-cart', [CartController::class,'addToCart'])->name('front.addToCart');
+// Route::post('/update-cart', [CartController::class,'updateCart'])->name('front.updateCart');
+// Route::post('/delete-item', [CartController::class,'deleteItem'])->name('front.deleteItem.cart');
+// Route::get('/checkout', [CartController::class,'checkout'])->name('front.checkout');
+// Route::post('/process-checkout', [CartController::class,'processCheckout'])->name('front.processCheckout');
+// Route::get('/thanks/{orderId}', [CartController::class,'thankyou'])->name('front.thankyou');
+// Route::post('/get-order-summery', [CartController::class,'getOrderSummery'])->name('front.getOrderSummery');
+// Route::post('/apply-discount', [CartController::class,'applyDiscount'])->name('front.applyDiscount');
+// Route::post('/remove-discount', [CartController::class,'removeCoupon'])->name('front.removeCoupon');
+// Route::post('/add-to-wishlist',[FrontController::class,'addToWishlist'])->name('front.addToWishlist');
+// Route::get('/page/{slug}',[FrontController::class,'page'])->name('front.page');
 
 
 
 
-// registre & login
 
-Route::group(['prefix' => 'account'], function(){
-    Route::group(['middleware' => 'guest'], function(){
-        Route::get('/login',[AuthController::class,'login'])->name('account.login');
-        Route::post('/login',[AuthController::class,'authenticate'])->name('account.authenticate');
-        Route::get('/register',[AuthController::class,'register'])->name('account.register');
-        Route::post('/process-register',[AuthController::class,'processRegister'])->name('account.processRegister');
-    });
 
-    Route::group(['middleware' => 'auth'], function(){
-        Route::get('/profile',[AuthController::class,'profile'])->name('account.profile');
-        Route::post('/update-profile',[AuthController::class,'updateProfile'])->name('account.updateProfile');
-        Route::post('/update-address',[AuthController::class,'updateAddress'])->name('account.updateAddress');
-        Route::get('/change-password',[AuthController::class,'showChangePasswordForm'])->name('account.changePassword');
-        Route::post('/process-change-password',[AuthController::class,'changePassword'])->name('account.processChangePassword');
-        Route::get('/my-orders',[AuthController::class,'orders'])->name('account.orders');
-        Route::get('/my-wishlist',[AuthController::class,'wishlist'])->name('account.wishlist');
-        Route::post('/remove-product-form-wishlist',[AuthController::class,'removeProductFormWishList'])->name('account.removeProductFormWishList');
-        Route::get('/order-detail/{orderId}',[AuthController::class,'orderDetail'])->name('account.orderDetail');
-        Route::get('/logout',[AuthController::class,'logout'])->name('account.logout');
-    });
-});
+// // registre & login
+
+// Route::group(['prefix' => 'account'], function(){
+//     Route::group(['middleware' => 'guest'], function(){
+//         Route::get('/login',[AuthController::class,'login'])->name('account.login');
+//         Route::post('/login',[AuthController::class,'authenticate'])->name('account.authenticate');
+//         Route::get('/register',[AuthController::class,'register'])->name('account.register');
+//         Route::post('/process-register',[AuthController::class,'processRegister'])->name('account.processRegister');
+//     });
+
+//     Route::group(['middleware' => 'auth'], function(){
+//         Route::get('/profile',[AuthController::class,'profile'])->name('account.profile');
+//         Route::post('/update-profile',[AuthController::class,'updateProfile'])->name('account.updateProfile');
+//         Route::post('/update-address',[AuthController::class,'updateAddress'])->name('account.updateAddress');
+//         Route::get('/change-password',[AuthController::class,'showChangePasswordForm'])->name('account.changePassword');
+//         Route::post('/process-change-password',[AuthController::class,'changePassword'])->name('account.processChangePassword');
+//         Route::get('/my-orders',[AuthController::class,'orders'])->name('account.orders');
+//         Route::get('/my-wishlist',[AuthController::class,'wishlist'])->name('account.wishlist');
+//         Route::post('/remove-product-form-wishlist',[AuthController::class,'removeProductFormWishList'])->name('account.removeProductFormWishList');
+//         Route::get('/order-detail/{orderId}',[AuthController::class,'orderDetail'])->name('account.orderDetail');
+//         Route::get('/logout',[AuthController::class,'logout'])->name('account.logout');
+//     });
+// });
 
 Route::group(['prefix' => 'admin'], function(){
 
