@@ -130,7 +130,6 @@
 
 <script>
 
-
     $(document).ready(function(){
         $('#starts_at').datetimepicker({
                 // options here

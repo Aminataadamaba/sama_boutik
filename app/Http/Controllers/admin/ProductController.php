@@ -53,6 +53,8 @@ class ProductController extends Controller
             'track_qty' => 'required|in:Yes,No',
             'category'=> 'required|numeric',
             'is_featured' => 'required|in:Yes,No',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validation pour l'image principale
+
         ];
 
         if (!empty($request->track_qty) && $request->track_qty == 'Yes') {
@@ -82,47 +84,46 @@ class ProductController extends Controller
             $product->related_products = (!empty($request->related_products)) ? implode(',', $request->related_products) :'';
             $product->save();
 
-            if (!empty($request->image_array)) {
-                foreach ($request->image_array as $temp_image_id) {
-                    $tempImageInfo = TempImage::find($temp_image_id);
-                    $extArray = explode('.', $tempImageInfo->name);
-                    $ext = last($extArray); // extension du fichier (jpeg, gif, png, etc.)
+            // Gérer l'image principale
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = $product->id . '-' . time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('storage/uploads/product/large'), $imageName);
 
-                    // Créer une nouvelle instance de ProductImage
+            // Mettre à jour le nom de l'image principale dans la base de données
+            $product->image = $imageName;
+            $product->save();
+        }
+
+        // Gérer les images supplémentaires
+        if ($request->hasFile('image_array')) {
+            foreach ($request->file('image_array') as $image) {
+                if ($image->isValid()) {
+                    $imageName = $product->id . '-' . time() . '.' . $image->getClientOriginalExtension();
+                    $image->move(public_path('storage/uploads/product/large'), $imageName);
+
+                    // Créer une nouvelle instance de ProductImage et enregistrer l'image
                     $productImage = new ProductImage();
-
-                    // Déplacer le fichier téléchargé vers le répertoire de stockage local
-                    // Utilisez simplement le nom de fichier sans le chemin
-                    $imageName = $product->id . '-' . $productImage->id . '-' . time() . '.' . $ext;
-                    // Assurez-vous que le fichier existe dans le répertoire temporaire
-                    $tempImagePath = public_path().'/uploads/product/large/'.$tempImageInfo->name;
-                    if (file_exists($tempImagePath)) {
-                        // Déplacez le fichier vers le répertoire de stockage des images de produits
-                        // Utilisez simplement le nom de fichier sans le chemin complet
-                        Storage::putFileAs('public/uploads/product/large', $tempImagePath, $imageName);
-                        // Enregistrez le nom du fichier dans la base de données
-                        $productImage->product_id = $product->id; // Assurez-vous de définir l'ID du produit
-                        $productImage->image = $imageName;
-                        $productImage->save();
-                    }
+                    $productImage->product_id = $product->id; // Assurez-vous de définir l'ID du produit
+                    $productImage->image = $imageName;
+                    $productImage->save();
                 }
             }
+        }
 
+        // Message de succès
+        $request->session()->flash('success', 'Produit ajouté avec succès');
 
-
-            $request->session()->flash('success','product added successfully');
-
-            return response([
-                'status' => true,
-                'message' => 'product added successfully'
-            ]);
-
-         }else {
-            return response()->json([
-                'status' => false,
-                'errors' => $validator->errors()
-            ]);
-         }
+        return response([
+            'status' => true,
+            'message' => 'Produit ajouté avec succès'
+        ]);
+    } else {
+        return response()->json([
+            'status' => false,
+            'errors' => $validator->errors()
+        ]);
+    }
     }
 
     public function edit($id, Request $request){

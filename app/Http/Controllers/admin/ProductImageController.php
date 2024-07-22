@@ -39,7 +39,7 @@ class ProductImageController extends Controller
         $newName = time() . '.' . $image->getClientOriginalExtension();
 
         // Déplacement de l'image vers le répertoire de stockage temporaire
-        $image->move(public_path('/uploads/product/large'), $newName);
+        $image->move(public_path('storage/uploads/product/large/'), $newName);
 
         // Enregistrement de l'image temporaire dans la base de données
         $tempImage = new TempImage();
